@@ -731,12 +731,49 @@
     }
 
     .work-title {
-      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      font-size: 1rem;
       font-weight: 700;
-      padding: 1.4rem 1.5rem 1rem;
+      padding: 1.2rem 1.5rem;
       color: var(--text);
       letter-spacing: 0.02em;
       border-bottom: 1px solid var(--border);
+    }
+
+    .work-title-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .yt-title-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-shrink: 0;
+      padding: 0.4rem 0.9rem;
+      background: rgba(255,0,0,0.85);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .yt-title-btn:hover {
+      background: rgba(255,0,0,1);
+      transform: scale(1.05);
+    }
+
+    .yt-title-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
     }
 
     .work-desc {
@@ -934,73 +971,57 @@
 
   <div class="works-grid">
     <div class="work-card fade-in">
-      <div class="work-title">【対談系YouTube】AURA 様</div>
+      <div class="work-title">
+        <span class="work-title-text">【対談系YouTube】AURA 様</span>
+        <a href="https://www.youtube.com/watch?v=XYmlikAKG60" target="_blank" rel="noopener" class="yt-title-btn">
+          <svg viewBox="0 0 24 24" fill="white"><polygon points="9.5,7.5 16.5,12 9.5,16.5"/></svg>
+          YouTubeで再生
+        </a>
+      </div>
       <a href="https://www.youtube.com/watch?v=XYmlikAKG60" target="_blank" rel="noopener" class="video-wrap yt-link">
-        <img
-          src="https://img.youtube.com/vi/XYmlikAKG60/maxresdefault.jpg"
-          alt="AURA対談動画サムネイル"
-          class="yt-thumb"
-        >
-        <div class="yt-play-btn">
-          <div class="yt-play-icon">
-            <svg viewBox="0 0 24 24" fill="white" width="32" height="32"><polygon points="9.5,7.5 16.5,12 9.5,16.5"/></svg>
-          </div>
-          <span class="yt-label">YouTubeで再生</span>
-        </div>
+        <img src="https://img.youtube.com/vi/XYmlikAKG60/maxresdefault.jpg" alt="AURA対談動画サムネイル" class="yt-thumb">
       </a>
       <div class="work-desc">テロップ・サイドテロップ・番組説明等をデザインし、動画全体のブラッシュアップを担当し編集しました。</div>
     </div>
 
     <div class="work-card fade-in">
-      <div class="work-title">【テレビ番組風動画】参考番組：トークィーンズ等</div>
+      <div class="work-title">
+        <span class="work-title-text">【テレビ番組風動画】参考番組：トークィーンズ等</span>
+        <a href="https://youtu.be/aLAjIQ2i1a4" target="_blank" rel="noopener" class="yt-title-btn">
+          <svg viewBox="0 0 24 24" fill="white"><polygon points="9.5,7.5 16.5,12 9.5,16.5"/></svg>
+          YouTubeで再生
+        </a>
+      </div>
       <a href="https://youtu.be/aLAjIQ2i1a4" target="_blank" rel="noopener" class="video-wrap yt-link">
-        <img
-          src="https://img.youtube.com/vi/aLAjIQ2i1a4/maxresdefault.jpg"
-          alt="テレビ番組風動画サムネイル"
-          class="yt-thumb"
-        >
-        <div class="yt-play-btn">
-          <div class="yt-play-icon">
-            <svg viewBox="0 0 24 24" fill="white" width="32" height="32"><polygon points="9.5,7.5 16.5,12 9.5,16.5"/></svg>
-          </div>
-          <span class="yt-label">YouTubeで再生</span>
-        </div>
+        <img src="https://img.youtube.com/vi/aLAjIQ2i1a4/maxresdefault.jpg" alt="テレビ番組風動画サムネイル" class="yt-thumb">
       </a>
       <div class="work-desc">サムネイルや動画内のテロップ、サイドテロップ、演出等は全て自作しております。</div>
     </div>
 
     <div class="work-card fade-in">
-      <div class="work-title">【恋愛コーチングYouTube】クロウマch 様</div>
+      <div class="work-title">
+        <span class="work-title-text">【恋愛コーチングYouTube】クロウマch 様</span>
+        <a href="https://www.youtube.com/watch?v=pVllIWBhJdg&t=1511s" target="_blank" rel="noopener" class="yt-title-btn">
+          <svg viewBox="0 0 24 24" fill="white"><polygon points="9.5,7.5 16.5,12 9.5,16.5"/></svg>
+          YouTubeで再生
+        </a>
+      </div>
       <a href="https://www.youtube.com/watch?v=pVllIWBhJdg&t=1511s" target="_blank" rel="noopener" class="video-wrap yt-link">
-        <img
-          src="https://img.youtube.com/vi/pVllIWBhJdg/maxresdefault.jpg"
-          alt="恋愛コーチングYouTubeサムネイル"
-          class="yt-thumb"
-        >
-        <div class="yt-play-btn">
-          <div class="yt-play-icon">
-            <svg viewBox="0 0 24 24" fill="white" width="32" height="32"><polygon points="9.5,7.5 16.5,12 9.5,16.5"/></svg>
-          </div>
-          <span class="yt-label">YouTubeで再生</span>
-        </div>
+        <img src="https://img.youtube.com/vi/pVllIWBhJdg/maxresdefault.jpg" alt="恋愛コーチングYouTubeサムネイル" class="yt-thumb">
       </a>
       <div class="work-desc">動画のデザインや演出のブラッシュアップを行い、再生回数向上に貢献しました。</div>
     </div>
 
     <div class="work-card fade-in">
-      <div class="work-title">【解説系YouTube】NPO法人ALL 様</div>
+      <div class="work-title">
+        <span class="work-title-text">【解説系YouTube】NPO法人ALL 様</span>
+        <a href="https://www.youtube.com/watch?v=QIoPfadOgKA&t=281s" target="_blank" rel="noopener" class="yt-title-btn">
+          <svg viewBox="0 0 24 24" fill="white"><polygon points="9.5,7.5 16.5,12 9.5,16.5"/></svg>
+          YouTubeで再生
+        </a>
+      </div>
       <a href="https://www.youtube.com/watch?v=QIoPfadOgKA&t=281s" target="_blank" rel="noopener" class="video-wrap yt-link">
-        <img
-          src="https://img.youtube.com/vi/QIoPfadOgKA/maxresdefault.jpg"
-          alt="NPO法人ALL解説動画サムネイル"
-          class="yt-thumb"
-        >
-        <div class="yt-play-btn">
-          <div class="yt-play-icon">
-            <svg viewBox="0 0 24 24" fill="white" width="32" height="32"><polygon points="9.5,7.5 16.5,12 9.5,16.5"/></svg>
-          </div>
-          <span class="yt-label">YouTubeで再生</span>
-        </div>
+        <img src="https://img.youtube.com/vi/QIoPfadOgKA/maxresdefault.jpg" alt="NPO法人ALL解説動画サムネイル" class="yt-thumb">
       </a>
       <div class="work-desc">情報が伝わりやすいテロップ設計と視覚的な演出を意識し、解説動画の編集・デザインを担当しました。</div>
     </div>
