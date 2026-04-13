@@ -528,23 +528,17 @@
     .skill-desc {
       font-size: 0.83rem;
       color: var(--text-muted);
-      line-height: 1.65;
-      flex: 1;
-    }
-
-    .skill-footer {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      margin-top: 0.2rem;
+      line-height: 1.75;
+      overflow-wrap: break-word;
+      word-break: normal;
     }
 
     .skill-bar-wrap {
-      flex: 1;
       height: 5px;
       background: rgba(124,92,252,0.15);
       border-radius: 99px;
       overflow: visible;
+      margin-top: 0.4rem;
     }
 
     .skill-bar {
@@ -554,15 +548,6 @@
       box-shadow: 0 0 8px rgba(124,92,252,0.8), 0 0 16px rgba(192,92,252,0.4);
       width: 0;
       transition: width 1.2s ease;
-    }
-
-    .skill-pct {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--accent);
-      min-width: 2.2rem;
-      text-align: right;
-      flex-shrink: 0;
     }
 
     /* ── Timeline ── */
@@ -970,10 +955,7 @@
         <div class="skill-name">動画編集</div>
       </div>
       <div class="skill-desc">Premiere Pro 2026を使用し、カット・テロップ・SE・BGM・演出まで全工程をお任せいただけます。</div>
-      <div class="skill-footer">
-        <div class="skill-bar-wrap"><div class="skill-bar" data-width="95"></div></div>
-        <span class="skill-pct">95%</span>
-      </div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="95"></div></div>
     </div>
     <div class="skill-card fade-in">
       <div class="skill-header">
@@ -981,21 +963,15 @@
         <div class="skill-name">ディレクション</div>
       </div>
       <div class="skill-desc">複数の編集者と連携して稼働。納期管理から品質担保まで一括で請け負うので、安心してお任せください。</div>
-      <div class="skill-footer">
-        <div class="skill-bar-wrap"><div class="skill-bar" data-width="90"></div></div>
-        <span class="skill-pct">90%</span>
-      </div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="90"></div></div>
     </div>
     <div class="skill-card fade-in">
       <div class="skill-header">
         <div class="skill-icon">📱</div>
         <div class="skill-name">SNS動画制作</div>
       </div>
-      <div class="skill-desc">各SNS媒体の特性に合わせ、視聴者の心情やCTAを意識した"伝わる編集"を追求します。</div>
-      <div class="skill-footer">
-        <div class="skill-bar-wrap"><div class="skill-bar" data-width="92"></div></div>
-        <span class="skill-pct">92%</span>
-      </div>
+      <div class="skill-desc">各SNS媒体の特性に合わせ、視聴者の心情やCTAを意識した伝わる編集を追求します。</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="92"></div></div>
     </div>
     <div class="skill-card fade-in">
       <div class="skill-header">
@@ -1003,10 +979,7 @@
         <div class="skill-name">動画デザイン</div>
       </div>
       <div class="skill-desc">テロップデザインから図解・サムネイルまで、視聴者の目を引くビジュアルに仕上げます。</div>
-      <div class="skill-footer">
-        <div class="skill-bar-wrap"><div class="skill-bar" data-width="88"></div></div>
-        <span class="skill-pct">88%</span>
-      </div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="88"></div></div>
     </div>
   </div>
 </section>
