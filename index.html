@@ -735,8 +735,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 0.8rem;
-      flex-wrap: wrap;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 700;
       padding: 1.2rem 1.5rem;
       color: var(--text);
@@ -747,6 +746,9 @@
     .work-title-text {
       flex: 1;
       min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .yt-title-btn {
