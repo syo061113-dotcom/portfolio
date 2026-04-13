@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>永井章太 | 動画編集ディレクター</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #13131a;
+      --bg-card2: #1a1a24;
+      --accent: #7c5cfc;
+      --accent2: #c05cfc;
+      --text: #f0f0f5;
+      --text-muted: #8888aa;
+      --border: rgba(124, 92, 252, 0.2);
+      --glow: rgba(124, 92, 252, 0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    /* ── Splash screen ── */
+    #splash {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #splash-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #splash.exit {
+      animation: splashExit 1s cubic-bezier(0.7, 0, 1, 1) forwards;
+    }
+
+    @keyframes splashExit {
+      0%   { clip-path: inset(0 0 0 0); opacity: 1; }
+      60%  { clip-path: inset(0 0 0 0); opacity: 1; }
+      100% { clip-path: inset(50% 0 50% 0); opacity: 0; }
+    }
+
+    .splash-scan {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(124,92,252,0.06) 48%,
+        rgba(124,92,252,0.15) 50%,
+        rgba(124,92,252,0.06) 52%,
+        transparent 100%);
+      background-size: 100% 8px;
+      animation: scanMove 6s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes scanMove {
+      from { background-position: 0 -100vh; }
+      to   { background-position: 0 100vh; }
+    }
+
+    .splash-light {
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(180deg, transparent, var(--accent), var(--accent2), transparent);
+      box-shadow: 0 0 40px 20px rgba(124,92,252,0.4);
+      animation: lightSweep 1.2s cubic-bezier(0.4,0,0.2,1) 0.2s forwards;
+      left: -10%;
+      opacity: 0;
+    }
+
+    @keyframes lightSweep {
+      0%   { left: -10%; opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { left: 110%; opacity: 0; }
+    }
+
+    .splash-name {
+      font-size: clamp(3rem, 12vw, 8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff 20%, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0;
+      transform: scale(0.85);
+      animation: splashNameIn 0.7s cubic-bezier(0.2, 0, 0.2, 1) 0.9s forwards;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    @keyframes splashNameIn {
+      0%   { opacity: 0; transform: scale(0.85); filter: blur(12px); }
+      60%  { filter: blur(0); }
+      100% { opacity: 1; transform: scale(1); filter: blur(0); }
+    }
+
+    .splash-sub {
+      font-size: clamp(0.7rem, 2vw, 0.95rem);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0;
+      animation: splashSubIn 0.6s ease 1.5s forwards;
+      position: relative;
+      z-index: 1;
+      margin-top: 0.8rem;
+    }
+
+    @keyframes splashSubIn {
+      from { opacity: 0; transform: translateY(10px); letter-spacing: 0.6em; }
+      to   { opacity: 1; transform: translateY(0);    letter-spacing: 0.4em; }
+    }
+
+    .splash-line {
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+      box-shadow: 0 0 10px rgba(124,92,252,0.8);
+      position: relative;
+      z-index: 1;
+      margin-top: 1.5rem;
+      animation: splashLineGrow 0.8s ease 1.4s forwards;
+    }
+
+    @keyframes splashLineGrow {
+      to { width: 300px; }
+    }
+
+    .splash-corner {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      opacity: 0;
+      animation: splashCornerIn 0.4s ease 1s forwards;
+    }
+
+    .splash-corner.tl { top: 30%; left: calc(50% - 160px); border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
+    .splash-corner.tr { top: 30%; right: calc(50% - 160px); border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+    .splash-corner.bl { bottom: 30%; left: calc(50% - 160px); border-bottom: 2px solid var(--accent); border-left: 2px solid var(--accent); }
+    .splash-corner.br { bottom: 30%; right: calc(50% - 160px); border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+
+    @keyframes splashCornerIn {
+      from { opacity: 0; transform: scale(1.5); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* ── Glitch on hero name ── */
+    .glitch {
+      position: relative;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #fff 30%, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glitch::before {
+      left: 2px;
+      clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+      animation: glitch1 4s infinite linear;
+    }
+
+    .glitch::after {
+      left: -2px;
+      clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+      animation: glitch2 4s infinite linear;
+    }
+
+    @keyframes glitch1 {
+      0%, 88%, 100% { transform: translate(0); opacity: 0; }
+      90% { transform: translate(-3px, 1px); opacity: 1; }
+      92% { transform: translate(3px, -1px); opacity: 1; }
+      94% { transform: translate(0); opacity: 0; }
+    }
+
+    @keyframes glitch2 {
+      0%, 88%, 100% { transform: translate(0); opacity: 0; }
+      89% { transform: translate(3px, -1px); opacity: 1; }
+      91% { transform: translate(-3px, 1px); opacity: 1; }
+      93% { transform: translate(0); opacity: 0; }
+    }
+
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Scroll progress bar ── */
+    #progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      z-index: 999;
+      transition: width 0.1s linear;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 5%;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 5% 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    .orb1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(124,92,252,0.18) 0%, transparent 70%);
+      top: -100px; left: -100px;
+      animation: float1 8s ease-in-out infinite;
+    }
+
+    .orb2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(192,92,252,0.12) 0%, transparent 70%);
+      bottom: -50px; right: -50px;
+      animation: float2 10s ease-in-out infinite;
+    }
+
+    @keyframes float1 {
+      0%, 100% { transform: translate(0,0); }
+      50% { transform: translate(40px, 30px); }
+    }
+
+    @keyframes float2 {
+      0%, 100% { transform: translate(0,0); }
+      50% { transform: translate(-30px, -40px); }
+    }
+
+    .hero-inner {
+      max-width: 800px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      background: rgba(124,92,252,0.05);
+    }
+
+    .hero-badge::before {
+      content: '';
+      display: block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #7c5cfc;
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .hero-name span {
+      background: linear-gradient(135deg, #fff 30%, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-title {
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      border: none;
+      box-shadow: 0 0 24px rgba(124,92,252,0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(124,92,252,0.55);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: var(--accent);
+    }
+
+    /* ── Section base ── */
+    section {
+      padding: 6rem 5%;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0 5%;
+    }
+
+    /* ── Skills ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      border-radius: 16px;
+      padding: 1.6rem;
+      transition: all 0.35s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--glow), transparent);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 32px var(--glow);
+    }
+
+    .skill-card:hover::before { opacity: 1; }
+
+    .skill-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .skill-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .skill-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .skill-bar-wrap {
+      margin-top: auto;
+      padding-top: 1rem;
+      height: 3px;
+      background: rgba(124,92,252,0.15);
+      border-radius: 99px;
+      overflow: visible;
+    }
+
+    .skill-bar {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 8px rgba(124,92,252,0.8), 0 0 16px rgba(192,92,252,0.4);
+      width: 0;
+      transition: width 1.2s ease;
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, var(--accent), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.6s ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2.4rem;
+      top: 0.3rem;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      border: 2px solid var(--bg);
+    }
+
+    .timeline-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-period {
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(124,92,252,0.1);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    .timeline-company {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .timeline-role {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.8rem;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.65rem;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      color: var(--text-muted);
+    }
+
+    /* ── Contact ── */
+    #contact {
+      padding: 6rem 5% 8rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .contact-inner {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-inner::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .contact-inner .section-title {
+      margin-bottom: 0.8rem;
+    }
+
+    .contact-inner p {
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      background: var(--bg-card2);
+      transition: all 0.3s;
+    }
+
+    .contact-link:hover {
+      color: var(--text);
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--glow);
+      transform: translateY(-2px);
+    }
+
+    .contact-link svg {
+      width: 18px; height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Works ── */
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .work-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.35s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .work-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 32px var(--glow);
+      transform: translateY(-4px);
+    }
+
+    .work-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 1.4rem 1.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.02em;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .work-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      padding: 1rem 1.5rem 1.4rem;
+      line-height: 1.8;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 700px) {
+      .works-grid { grid-template-columns: 1fr; }
+    }
+
+    .video-wrap {
+      position: relative;
+      padding-top: 56.25%;
+    }
+
+    .video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .yt-thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .yt-link {
+      display: block;
+      text-decoration: none;
+    }
+
+    .yt-play-btn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: rgba(0,0,0,0.3);
+      transition: background 0.3s;
+    }
+
+    .yt-link:hover .yt-play-btn {
+      background: rgba(0,0,0,0.5);
+    }
+
+    .yt-play-icon {
+      width: 72px;
+      height: 50px;
+      background: rgba(255,0,0,0.9);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s;
+    }
+
+    .yt-link:hover .yt-play-icon {
+      transform: scale(1.1);
+    }
+
+    .yt-label {
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    }
+
+    @media (max-width: 560px) {
+      .works-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Fade-in animation ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .contact-inner { padding: 2rem 1.5rem; }
+      .timeline { padding-left: 1.5rem; }
+      .timeline-dot { left: -1.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="splash">
+  <canvas id="splash-canvas"></canvas>
+  <div class="splash-scan"></div>
+  <div class="splash-light"></div>
+  <div class="splash-corner tl"></div>
+  <div class="splash-corner tr"></div>
+  <div class="splash-corner bl"></div>
+  <div class="splash-corner br"></div>
+  <div class="splash-name">永井 章太</div>
+  <div class="splash-line"></div>
+  <div class="splash-sub">Video Editing Director</div>
+</div>
+
+<div id="progress"></div>
+
+<!-- ── Navigation ── -->
+<nav>
+  <span class="nav-logo">Welcome!</span>
+  <ul class="nav-links">
+    <li><a href="#skills">スキル</a></li>
+    <li><a href="#career">ポートフォリオ</a></li>
+    <li><a href="#contact">連絡先</a></li>
+  </ul>
+</nav>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="hero-bg-orb orb1"></div>
+  <div class="hero-bg-orb orb2"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Available for new projects</div>
+    <h1 class="hero-name"><span class="glitch" data-text="永井 章太">永井 章太</span></h1>
+
+    <p class="hero-title">動画編集ディレクター</p>
+    <p class="hero-desc">
+      映像の力でブランドのストーリーを紡ぐ。<br>
+      企画から完成まで、クリエイティブな映像体験を一貫してプロデュース。
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary">お問い合わせ</a>
+      <a href="#career" class="btn btn-ghost">実績を見る</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── Skills ── -->
+<section id="skills">
+  <p class="section-label fade-in">Skills</p>
+  <h2 class="section-title fade-in">スキル</h2>
+  <p class="section-subtitle fade-in" style="white-space: nowrap;">動画編集とディレクションを軸に、企画から納品まで一貫して対応します。</p>
+
+  <div class="skills-grid">
+    <div class="skill-card fade-in" style="border-color: rgba(124,92,252,0.5);">
+      <div class="skill-icon">🎬</div>
+      <div class="skill-name">動画編集</div>
+      <div class="skill-desc">Premiere Proを使用したカット編集・エフェクト・テロップ制作まで対応</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="95"></div></div>
+    </div>
+    <div class="skill-card fade-in" style="border-color: rgba(124,92,252,0.5);">
+      <div class="skill-icon">📋</div>
+      <div class="skill-name">ディレクション</div>
+      <div class="skill-desc">企画・構成・脚本から撮影指示・編集監修まで一括対応</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="90"></div></div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">📱</div>
+      <div class="skill-name">SNS動画制作</div>
+      <div class="skill-desc">YouTube・Instagram・TikTok向け動画の企画・編集・最適化</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="92"></div></div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🎯</div>
+      <div class="skill-name">コンテンツ戦略</div>
+      <div class="skill-desc">視聴データをもとにした再生数・エンゲージメント向上の戦略立案</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="83"></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── Works ── -->
+<section id="career">
+  <p class="section-label fade-in">Works</p>
+  <h2 class="section-title fade-in">ポートフォリオ</h2>
+  <p class="section-subtitle fade-in" style="max-width: none;"><span style="white-space: nowrap;">これまでに手がけた映像作品の一部をご紹介します。掲載以外にも多数の実績がございます。</span><br><span style="white-space: nowrap;">ご商談の際はご要望やイメージに近い実績を個別にご提示することも可能ですので、お気軽にお問い合わせください。</span></p>
+
+  <div class="works-grid">
+    <div class="work-card fade-in">
+      <div class="work-title">【コーチング系】実績</div>
+      <a href="https://www.youtube.com/watch?v=pVllIWBhJdg&t=1511s" target="_blank" rel="noopener" class="video-wrap yt-link">
+        <img
+          src="https://img.youtube.com/vi/pVllIWBhJdg/maxresdefault.jpg"
+          alt="コーチング系実績サムネイル"
+          class="yt-thumb"
+        >
+        <div class="yt-play-btn">
+          <div class="yt-play-icon">
+            <svg viewBox="0 0 24 24" fill="white" width="32" height="32"><polygon points="9.5,7.5 16.5,12 9.5,16.5"/></svg>
+          </div>
+          <span class="yt-label">YouTubeで再生</span>
+        </div>
+      </a>
+      <div class="work-desc">動画のデザインや演出のブラッシュアップを行い、再生回数向上に貢献しました。</div>
+    </div>
+
+    <div class="work-card fade-in">
+      <div class="work-title">【テレビ番組風】ポートフォリオ</div>
+      <a href="https://youtu.be/aLAjIQ2i1a4" target="_blank" rel="noopener" class="video-wrap yt-link">
+        <img
+          src="https://img.youtube.com/vi/aLAjIQ2i1a4/maxresdefault.jpg"
+          alt="作品動画サムネイル"
+          class="yt-thumb"
+        >
+        <div class="yt-play-btn">
+          <div class="yt-play-icon">
+            <svg viewBox="0 0 24 24" fill="white" width="32" height="32"><polygon points="9.5,7.5 16.5,12 9.5,16.5"/></svg>
+          </div>
+          <span class="yt-label">YouTubeで再生</span>
+        </div>
+      </a>
+      <div class="work-desc">サムネイルや動画内のテロップ、サイドテロップ、演出等は全て自作しております。</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── Contact ── -->
+<section id="contact">
+  <div class="contact-inner fade-in">
+    <p class="section-label" style="text-align:center">Contact</p>
+    <h2 class="section-title">お気軽にご連絡ください</h2>
+    <p>新規プロジェクトのご相談・お見積もりはいつでもお受けしています。<br>まずはメッセージをお送りください。</p>
+    <div class="contact-links">
+      <a href="mailto:syo061113@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        syo061113@gmail.com
+      </a>
+      <a href="https://x.com/kabu___manabu" target="_blank" rel="noopener" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L2.07 2.25h6.928l4.26 5.631 4.986-5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X (Twitter)
+      </a>
+      <a href="#" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+        Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>&copy; 2026 永井章太 — 動画編集ディレクター. All rights reserved.</p>
+</footer>
+
+<script>
+  // Splash canvas particle effect
+  const canvas = document.getElementById('splash-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+
+  const particles = [];
+  const lines = [];
+  const COLORS = ['rgba(124,92,252,', 'rgba(192,92,252,', 'rgba(180,120,255,'];
+
+  // Floating particles
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.8 + 0.3,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      alpha: Math.random() * 0.6 + 0.2,
+    });
+  }
+
+  // Radial lines from center
+  for (let i = 0; i < 24; i++) {
+    const angle = (i / 24) * Math.PI * 2;
+    lines.push({
+      angle,
+      len: Math.random() * 200 + 80,
+      alpha: Math.random() * 0.15 + 0.03,
+      speed: (Math.random() - 0.5) * 0.002,
+    });
+  }
+
+  function drawSplash() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+
+    // Central glow
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 400);
+    grad.addColorStop(0, 'rgba(124,92,252,0.18)');
+    grad.addColorStop(0.5, 'rgba(124,92,252,0.05)');
+    grad.addColorStop(1, 'transparent');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Radial lines
+    lines.forEach(l => {
+      l.angle += l.speed;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + Math.cos(l.angle) * l.len, cy + Math.sin(l.angle) * l.len);
+      ctx.strokeStyle = `rgba(124,92,252,${l.alpha})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    });
+
+    // Particles
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+
+      // Connect nearby particles
+      particles.forEach(p2 => {
+        const dx = p.x - p2.x, dy = p.y - p2.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = `rgba(124,92,252,${0.08 * (1 - dist / 100)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      });
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color + p.alpha + ')';
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = 'rgba(124,92,252,0.8)';
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+  }
+
+  let splashAnimId;
+  function animateSplash() {
+    splashAnimId = requestAnimationFrame(animateSplash);
+    drawSplash();
+  }
+  animateSplash();
+
+  // Splash screen
+  const splash = document.getElementById('splash');
+  setTimeout(() => {
+    splash.classList.add('exit');
+    setTimeout(() => {
+      splash.style.display = 'none';
+      cancelAnimationFrame(splashAnimId);
+    }, 1000);
+  }, 2800);
+
+  // Scroll progress bar
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (scrollTop / docHeight * 100) + '%';
+  });
+
+  // Intersection Observer for animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Animate skill bars
+        const bar = entry.target.querySelector?.('.skill-bar');
+        if (bar) {
+          bar.style.width = bar.dataset.width + '%';
+        }
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in, .timeline-item, .skill-card').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Stagger skill cards
+  document.querySelectorAll('.skill-card').forEach((card, i) => {
+    card.style.transitionDelay = (i * 0.07) + 's';
+  });
+
+</script>
+</body>
+</html>
