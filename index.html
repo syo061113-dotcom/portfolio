@@ -1585,7 +1585,8 @@ let hoverTimer = null;
 
 worksList.querySelectorAll(".work-item").forEach(item => {
   const iframe = item.querySelector("iframe");
-  item.addEventListener("mouseenter", () => {
+  const media = item.querySelector(".work-media");
+  media.addEventListener("mouseenter", () => {
     clearTimeout(hoverTimer);
     hoverTimer = setTimeout(() => {
       if (activeWork && activeWork !== item) {
@@ -1598,7 +1599,7 @@ worksList.querySelectorAll(".work-item").forEach(item => {
       activeWork = item;
     }, 500);
   });
-  item.addEventListener("mouseleave", () => {
+  media.addEventListener("mouseleave", () => {
     clearTimeout(hoverTimer);
     iframe.src = "";
     item.classList.remove("playing");
