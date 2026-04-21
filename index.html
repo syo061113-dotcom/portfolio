@@ -80,6 +80,63 @@ body[data-grain="false"] .grain-layer { display: none; }
   border-bottom: 1px solid var(--line-soft);
   transition: background 0.4s ease;
 }
+
+/* Hamburger button */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px; height: 36px;
+  padding: 4px;
+  cursor: pointer;
+  z-index: 110;
+}
+.nav-hamburger span {
+  display: block;
+  width: 100%; height: 1px;
+  background: var(--ink);
+  transition: transform 0.3s, opacity 0.3s;
+  transform-origin: center;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* Mobile nav drawer */
+.nav-drawer {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: var(--off-white);
+  border-bottom: 1px solid var(--line-soft);
+  padding: 80px 24px 32px;
+  z-index: 105;
+  flex-direction: column;
+  gap: 0;
+  backdrop-filter: blur(12px);
+}
+.nav-drawer.open { display: flex; }
+.nav-drawer li {
+  list-style: none;
+  border-bottom: 1px solid var(--line-soft);
+}
+.nav-drawer a {
+  display: block;
+  font-family: var(--ff-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 18px 0;
+  color: var(--ink);
+}
+.nav-drawer a::before {
+  content: attr(data-num);
+  font-size: 10px;
+  color: var(--ink-mute);
+  margin-right: 12px;
+}
 .nav-brand {
   font-family: var(--ff-serif-ja);
   font-weight: 700;
@@ -1027,8 +1084,10 @@ body[data-accent="gold"] { --accent: #B89755; }
 @media (max-width: 1024px) {
   .nav { grid-template-columns: 1fr auto; gap: 20px; padding: 16px 24px; }
   .nav-menu { display: none; }
+  .nav-hamburger { display: flex; }
   .hero { padding: 100px 24px 60px; }
   .hero-meta, .scroll-hint { display: none; }
+  .hero-inner { min-height: unset; }
   .hero-sub { grid-template-columns: 1fr; }
   .hero-bottom { grid-template-columns: repeat(2, 1fr); gap: 24px; }
   .section { padding: 80px 24px; }
@@ -1036,12 +1095,91 @@ body[data-accent="gold"] { --accent: #B89755; }
   .section-meta { display: none; }
   .about-grid { grid-template-columns: 1fr; gap: 40px; }
   .skills-grid { grid-template-columns: repeat(2, 1fr); }
-  .work-item { grid-template-columns: 40px 1fr; gap: 16px; padding: 24px 0; }
-  .work-media, .work-action { display: none; }
+  /* Work items: stack vertically and show media */
+  .work-item {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 32px 0;
+  }
+  .work-media {
+    display: block;
+    width: 100%;
+  }
+  /* Always show play button on touch devices */
+  .play-mark { opacity: 1; }
+  .work-item.playing .play-mark { opacity: 0; }
+  /* Remove grayscale filter on mobile */
+  .work-media-inner img { filter: none; }
+  /* Fix client name overflow */
+  .work-title .client { white-space: normal; }
+  .work-action {
+    display: block;
+    text-align: left;
+    padding: 12px 0;
+    border-top: 1px solid var(--line-soft);
+    font-size: 11px;
+  }
+  .work-action span { display: inline; font-size: 14px; margin-left: 8px; }
+  .work-idx { font-size: 10px; }
   .process-steps { grid-template-columns: 1fr 1fr; }
   .contact-methods { grid-template-columns: 1fr; }
   .contact-method:first-child { border-right: none; border-bottom: 1px solid var(--line-soft); }
   .footer-main { grid-template-columns: 1fr; gap: 40px; }
+}
+
+@media (max-width: 640px) {
+  .nav { padding: 14px 16px; }
+  .nav-brand { font-size: 14px; }
+
+  .hero { padding: 80px 16px 48px; }
+  .hero-main { padding: 40px 0 16px; }
+  .hero-name { font-size: clamp(52px, 14vw, 100px); }
+  .hero-role { font-size: 10px; letter-spacing: 0.2em; flex-wrap: wrap; }
+  .hero-ctas { flex-direction: column; width: 100%; min-width: unset; }
+  .btn { width: 100%; justify-content: space-between; }
+  .hero-bottom { grid-template-columns: repeat(2, 1fr); gap: 16px; padding-top: 24px; }
+  .stat-num { font-size: clamp(24px, 7vw, 36px); }
+
+  .section { padding: 60px 16px; }
+  .section-head {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+  .section-title { flex-wrap: wrap; gap: 8px; }
+  .section-title h2 { font-size: clamp(32px, 8vw, 48px); }
+
+  .about-lead { font-size: clamp(18px, 4.5vw, 24px); }
+  .about-bio { font-size: 14px; }
+  .spec-row { grid-template-columns: 80px 1fr; gap: 12px; }
+  .spec-value { font-size: 14px; }
+
+  .skills-grid { grid-template-columns: 1fr; }
+  .skill-card { padding: 28px 20px 32px; }
+
+  .work-title { font-size: clamp(20px, 5vw, 28px); }
+  .work-item { padding: 24px 0; gap: 12px; }
+
+  .process-steps {
+    grid-template-columns: 1fr;
+    border-left: none;
+    border-top: 1px solid rgba(242,238,230,0.12);
+  }
+  .process-step {
+    border-right: none;
+    border-bottom: 1px solid rgba(242,238,230,0.12);
+    padding: 32px 20px 40px;
+  }
+  .process-step-num { font-size: 56px; margin-bottom: 24px; }
+
+  .contact { padding: 80px 16px 60px; }
+  .contact-title { font-size: clamp(32px, 9vw, 72px); }
+  .contact-method { padding: 28px 20px; }
+  .contact-method-value { font-size: 18px; }
+
+  .footer { padding: 60px 16px 24px; }
+  .footer-brand { font-size: clamp(32px, 10vw, 64px); }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
 }
 </style>
 </head>
@@ -1062,7 +1200,18 @@ body[data-accent="gold"] { --accent: #B89755; }
     <li><a href="#contact" data-num="04">Contact</a></li>
   </ul>
   <div class="nav-status">Available 2026</div>
+  <button class="nav-hamburger" id="navToggle" aria-label="メニュー">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE DRAWER -->
+<ul class="nav-drawer" id="navDrawer">
+  <li><a href="#about" data-num="01">About</a></li>
+  <li><a href="#works" data-num="02">Works</a></li>
+  <li><a href="#process" data-num="03">Process</a></li>
+  <li><a href="#contact" data-num="04">Contact</a></li>
+</ul>
 
 <!-- HERO -->
 <header class="hero">
@@ -1229,7 +1378,7 @@ body[data-accent="gold"] { --accent: #B89755; }
       <div class="work-media">
 
         <div class="work-media-inner">
-          <img src="https://img.youtube.com/vi/XYmlikAKG60/maxresdefault.jpg" alt="AURA 対談動画サムネイル" loading="lazy" />
+          <img src="https://img.youtube.com/vi/XYmlikAKG60/maxresdefault.jpg" alt="AURA 対談動画サムネイル" loading="lazy" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/XYmlikAKG60/hqdefault.jpg'" />
         </div>
         <iframe data-src="https://www.youtube-nocookie.com/embed/XYmlikAKG60?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0" allow="autoplay; encrypted-media" loading="lazy"></iframe>
         <div class="play-mark"><div class="play-mark-inner"></div></div>
@@ -1248,7 +1397,7 @@ body[data-accent="gold"] { --accent: #B89755; }
       <div class="work-media">
 
         <div class="work-media-inner">
-          <img src="https://img.youtube.com/vi/aLAjIQ2i1a4/maxresdefault.jpg" alt="テレビ番組風動画サムネイル" loading="lazy" />
+          <img src="https://img.youtube.com/vi/aLAjIQ2i1a4/maxresdefault.jpg" alt="テレビ番組風動画サムネイル" loading="lazy" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/aLAjIQ2i1a4/hqdefault.jpg'" />
         </div>
         <iframe data-src="https://www.youtube-nocookie.com/embed/aLAjIQ2i1a4?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0" allow="autoplay; encrypted-media" loading="lazy"></iframe>
         <div class="play-mark"><div class="play-mark-inner"></div></div>
@@ -1267,7 +1416,7 @@ body[data-accent="gold"] { --accent: #B89755; }
       <div class="work-media">
 
         <div class="work-media-inner">
-          <img src="https://img.youtube.com/vi/pVllIWBhJdg/maxresdefault.jpg" alt="恋愛コーチング YouTubeサムネイル" loading="lazy" />
+          <img src="https://img.youtube.com/vi/pVllIWBhJdg/maxresdefault.jpg" alt="恋愛コーチング YouTubeサムネイル" loading="lazy" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/pVllIWBhJdg/hqdefault.jpg'" />
         </div>
         <iframe data-src="https://www.youtube-nocookie.com/embed/pVllIWBhJdg?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&start=1511" allow="autoplay; encrypted-media" loading="lazy"></iframe>
         <div class="play-mark"><div class="play-mark-inner"></div></div>
@@ -1286,7 +1435,7 @@ body[data-accent="gold"] { --accent: #B89755; }
       <div class="work-media">
 
         <div class="work-media-inner">
-          <img src="https://img.youtube.com/vi/QIoPfadOgKA/maxresdefault.jpg" alt="NPO法人ALL解説動画サムネイル" loading="lazy" />
+          <img src="https://img.youtube.com/vi/QIoPfadOgKA/maxresdefault.jpg" alt="NPO法人ALL解説動画サムネイル" loading="lazy" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/QIoPfadOgKA/hqdefault.jpg'" />
         </div>
         <iframe data-src="https://www.youtube-nocookie.com/embed/QIoPfadOgKA?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&start=281" allow="autoplay; encrypted-media" loading="lazy"></iframe>
         <div class="play-mark"><div class="play-mark-inner"></div></div>
@@ -1423,7 +1572,7 @@ for (let i = 0; i < 24; i++) {
   const cell = document.createElement("div");
   cell.className = "cell";
   const id = videoIds[i % videoIds.length];
-  cell.style.backgroundImage = `url(https://img.youtube.com/vi/${id}/maxresdefault.jpg)`;
+  cell.style.backgroundImage = `url(https://img.youtube.com/vi/${id}/hqdefault.jpg)`;
   grid.appendChild(cell);
 }
 
@@ -1497,6 +1646,22 @@ window.addEventListener("scroll", () => {
     nav.style.background = "";
   }
 }, { passive: true });
+
+/* Hamburger menu */
+const navToggle = document.getElementById("navToggle");
+const navDrawer = document.getElementById("navDrawer");
+navToggle.addEventListener("click", () => {
+  const isOpen = navDrawer.classList.toggle("open");
+  navToggle.classList.toggle("open", isOpen);
+  document.body.style.overflow = isOpen ? "hidden" : "";
+});
+navDrawer.querySelectorAll("a").forEach(a => {
+  a.addEventListener("click", () => {
+    navDrawer.classList.remove("open");
+    navToggle.classList.remove("open");
+    document.body.style.overflow = "";
+  });
+});
 </script>
 
 </body>
