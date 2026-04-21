@@ -1600,6 +1600,9 @@ worksList.querySelectorAll(".work-item").forEach(item => {
   });
   item.addEventListener("mouseleave", () => {
     clearTimeout(hoverTimer);
+    iframe.src = "";
+    item.classList.remove("playing");
+    if (activeWork === item) activeWork = null;
   });
   item.addEventListener("click", (e) => {
     if (e.target.closest("iframe")) return;
