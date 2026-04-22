@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#EAE3D2"/>
+
+  <!-- Subtle grain texture via pattern -->
+  <defs>
+    <pattern id="grain" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="4" fill="none"/>
+      <circle cx="1" cy="1" r="0.4" fill="#1C120E" opacity="0.04"/>
+      <circle cx="3" cy="3" r="0.4" fill="#1C120E" opacity="0.04"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grain)"/>
+
+  <!-- Top border line -->
+  <line x1="0" y1="0" x2="1200" y2="0" stroke="#1C120E" stroke-width="4" opacity="0.8"/>
+
+  <!-- Left vertical accent line -->
+  <line x1="80" y1="80" x2="80" y2="550" stroke="#1C120E" stroke-width="1" opacity="0.2"/>
+
+  <!-- Top meta label -->
+  <text x="104" y="118" font-family="Helvetica Neue, Arial, sans-serif" font-size="13" fill="#4F3F37" letter-spacing="4" opacity="0.7">PORTFOLIO 2026 — MIYAZAKI, JAPAN</text>
+
+  <!-- Horizontal separator -->
+  <line x1="104" y1="140" x2="600" y2="140" stroke="#1C120E" stroke-width="0.5" opacity="0.25"/>
+
+  <!-- Main name — Japanese -->
+  <text x="104" y="330" font-family="serif" font-size="148" fill="#1C120E" font-weight="600" letter-spacing="-4">永井章太</text>
+
+  <!-- Role — Japanese -->
+  <text x="108" y="390" font-family="serif" font-size="28" fill="#4F3F37" letter-spacing="2">動画編集ディレクター</text>
+
+  <!-- Role — English -->
+  <text x="108" y="428" font-family="Helvetica Neue, Arial, sans-serif" font-size="14" fill="#7A1D2C" letter-spacing="5">VIDEO PRODUCTION DIRECTOR</text>
+
+  <!-- Bottom separator -->
+  <line x1="104" y1="470" x2="600" y2="470" stroke="#1C120E" stroke-width="0.5" opacity="0.25"/>
+
+  <!-- Bottom meta -->
+  <text x="104" y="498" font-family="Helvetica Neue, Arial, sans-serif" font-size="13" fill="#4F3F37" letter-spacing="3" opacity="0.6">AVAILABLE 2026 · 2h RESPONSE</text>
+
+  <!-- Right decorative block -->
+  <rect x="820" y="80" width="300" height="470" fill="#1C120E" opacity="0.04" rx="2"/>
+  <line x1="820" y1="80" x2="820" y2="550" stroke="#1C120E" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- Right content -->
+  <text x="860" y="200" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#4F3F37" letter-spacing="3" opacity="0.6">SKILLS</text>
+  <text x="860" y="240" font-family="serif" font-size="16" fill="#1C120E" opacity="0.8">動画編集 / Video Editing</text>
+  <text x="860" y="275" font-family="serif" font-size="16" fill="#1C120E" opacity="0.8">ディレクション / Direction</text>
+  <text x="860" y="310" font-family="serif" font-size="16" fill="#1C120E" opacity="0.8">SNS動画 / Short-form</text>
+  <text x="860" y="345" font-family="serif" font-size="16" fill="#1C120E" opacity="0.8">動画デザイン / Motion</text>
+
+  <line x1="860" y1="375" x2="1100" y2="375" stroke="#1C120E" stroke-width="0.5" opacity="0.2"/>
+
+  <text x="860" y="415" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#4F3F37" letter-spacing="3" opacity="0.6">TOOLS</text>
+  <text x="860" y="448" font-family="serif" font-size="16" fill="#1C120E" opacity="0.8">Adobe Premiere Pro 2026</text>
+  <text x="860" y="476" font-family="serif" font-size="16" fill="#1C120E" opacity="0.8">Photoshop</text>
+
+  <!-- Bottom border -->
+  <line x1="0" y1="626" x2="1200" y2="626" stroke="#1C120E" stroke-width="4" opacity="0.8"/>
+</svg>
